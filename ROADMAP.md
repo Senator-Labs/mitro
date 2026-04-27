@@ -29,11 +29,11 @@ versioning_spec: specs/versioning.md
 
 ### 1.1 Repository Initialization
 
-- [ ] `git init` in `~/mitro` and push to GitHub under `senator-labs/mitro`
-- [ ] Add `.gitignore` covering: `target/`, `node_modules/`, `*.db`, `*.db-shm`, `*.db-wal`, `.env*`, `dist/`
-- [ ] Create `CODEOWNERS` assigning `@senatordev` as sole reviewer for `specs/` and `.semantic_registry/`
-- [ ] Commit `specs/core_specification.md` as the inaugural tracked file — this is the immutable contract
-- [ ] Tag the initial commit `v0.0.0.0.1` (Senator Versioning baseline — see `specs/versioning.md`)
+- [x] `git init` in `~/mitro` and push to GitHub under `senator-labs/mitro`
+- [x] Add `.gitignore` covering: `target/`, `node_modules/`, `*.db`, `*.db-shm`, `*.db-wal`, `.env*`, `dist/`
+- [x] Create `CODEOWNERS` assigning `@senatordev` as sole reviewer for `specs/` and `.semantic_registry/`
+- [x] Commit `specs/core_specification.md` as the inaugural tracked file — this is the immutable contract
+- [x] Tag the initial commit `v0.0.0.0.1` (Senator Versioning baseline — see `specs/versioning.md`)
 
 **Verification:** `git log --oneline` shows at least one commit; remote `origin` is set and pushes cleanly.
 
