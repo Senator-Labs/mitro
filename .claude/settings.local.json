@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(gh auth *)",
+      "Bash(gh api *)",
+      "Bash(gh label *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'chore: git init and push to senator-labs/mitro' --label phase-1,infra --body ' *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'chore: add .gitignore for Rust/Node/SQLite artifacts' --label phase-1,infra --body ' *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'chore: create CODEOWNERS for specs/ and .semantic_registry/' --label phase-1,infra --body ' *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'docs: commit core_specification.md as inaugural tracked file' --label phase-1,spec --body ' *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'chore: tag baseline commit v0.0.0.0.1' --label phase-1,infra --body ' *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'docs: create .semantic_registry/tech-stack.md with hard rules' --label phase-1,registry --body ' *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'docs: create .semantic_registry/product.md \\(M0 scope summary\\)' --label phase-1,registry --body ' *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'docs: create .semantic_registry/DESIGN.md placeholder' --label phase-1,registry --body ' *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'chore: verify registry completeness — agent readability test' --label phase-1,registry --body ' *)",
+      "Bash(gh issue create --repo senator-labs/mitro --title 'docs: add specs/versioning.md to registry index' --label phase-1,registry --body ' *)"
+    ]
+  }
+}
