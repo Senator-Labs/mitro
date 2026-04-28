@@ -1,0 +1,6 @@
+# CODEOWNERS file for Mitro project
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Specification and semantic registry files require review from @senatordev
+specs/ @senatordev
+.semantic_registry/ @senatordev
