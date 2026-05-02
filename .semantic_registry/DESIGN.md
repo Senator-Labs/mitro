@@ -4,7 +4,7 @@ project: Mitro
 format: Google Stitch (W3C-compliant)
 status: placeholder
 milestone_scope: post-Milestone-0
-last_updated: 2026-04-29
+last_updated: 2026-05-02
 authority_level: deferred
 note: >
   Visual design tokens are intentionally deferred until after Milestone 0 validation.
@@ -15,14 +15,17 @@ note: >
 
 # Mitro — Design System
 
-> **STATUS: PLACEHOLDER — Milestone 0 Scope**
-> Design tokens, color palette, typography, and component guidelines are deferred to
-> post-Milestone 0. Agents must not implement any visual styling beyond what the bare
-> Milestone 0 UI contract specifies below.
+<context type="status_warning">
+**STATUS: PLACEHOLDER — Milestone 0 Scope**
+
+Design tokens, color palette, typography, and component guidelines are deferred to post-Milestone 0. Agents must not implement any visual styling beyond what the bare Milestone 0 UI contract specifies below.
+</context>
 
 ---
 
 ## Milestone 0 UI Contract (Currently Active)
+
+<mandatory_patterns type="m0_ui">
 
 This is the **only** UI specification in force until all Milestone 0 exit criteria are green.
 
@@ -48,7 +51,11 @@ This is the **only** UI specification in force until all Milestone 0 exit criter
 - Single-line status bar at bottom: last-saved timestamp + round-trip latency (ms)
 - Tailwind CSS installed but **no utility classes applied** — ready for post-M0 use
 
+</mandatory_patterns>
+
 ### What is banned in M0 UI
+
+<banned_practices type="m0_ui">
 
 - Markdown rendering (bold, italics, headers, code blocks)
 - File tree sidebar or navigation panel
@@ -58,9 +65,13 @@ This is the **only** UI specification in force until all Milestone 0 exit criter
 - Component libraries (shadcn/ui, Radix, etc.) — install post-M0 only
 - Custom fonts or icon sets
 
+</banned_practices>
+
 ---
 
 ## Design Philosophy (Post-Milestone 0 Vision)
+
+<context type="design_philosophy">
 
 Mitro's visual language is built on three principles:
 
@@ -80,6 +91,8 @@ Inspired by: iA Writer's focus mode, Obsidian's minimal theme, Linear's informat
 All design decisions are expressed as structured tokens in this file's YAML frontmatter.
 This allows Windsurf / Claude Code agents to reference exact values without hallucinating
 colors or sizes. No "make it look good" prompts — every value is explicit.
+
+</context>
 
 ---
 
@@ -183,6 +196,8 @@ Once all 10 Milestone 0 exit criteria are green:
 
 ## Agent Instructions
 
+<rules type="agent_behavior">
+
 When this file's `status` is `placeholder`:
 - Do **not** apply any visual styling beyond the M0 UI contract
 - Do **not** install or configure component libraries
@@ -192,3 +207,9 @@ When this file's `status` is `active`:
 - All token values in the YAML frontmatter are the **single source of truth**
 - Any color, size, or spacing not in this file requires human approval before use
 - Deviations from these tokens must be flagged by the Critic-in-the-Loop hook
+
+</rules>
+
+---
+
+**Authority:** This document is a placeholder until Milestone 0 completion. Post-M0, it becomes canonical for all visual design decisions. Revisions require human approval and a `docs(registry):` commit.
