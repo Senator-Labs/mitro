@@ -1,10 +1,10 @@
 ---
 type: design_tokens
-project: Mitro
+project: Mada
 format: Google Stitch (W3C-compliant)
 status: placeholder
 milestone_scope: post-Milestone-0
-last_updated: 2026-05-02
+last_updated: 2026-05-07
 authority_level: deferred
 note: >
   Visual design tokens are intentionally deferred until after Milestone 0 validation.
@@ -13,7 +13,7 @@ note: >
   See product.md and specs/core_specification.md §II.2.1 for banned M0 features.
 ---
 
-# Mitro — Design System
+# Mada — Design System
 
 <context type="status_warning">
 **STATUS: PLACEHOLDER — Milestone 0 Scope**
@@ -31,7 +31,7 @@ This is the **only** UI specification in force until all Milestone 0 exit criter
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  Mitro — Milestone 0 Prototype                      │
+│  Mada — Milestone 0 Prototype                      │
 │─────────────────────────────────────────────────────│
 │                                                     │
 │  ┌───────────────────────────────────────────────┐  │
@@ -73,7 +73,7 @@ This is the **only** UI specification in force until all Milestone 0 exit criter
 
 <context type="design_philosophy">
 
-Mitro's visual language is built on three principles:
+Mada's visual language is built on three principles:
 
 ### 1. Performance as Aesthetic
 

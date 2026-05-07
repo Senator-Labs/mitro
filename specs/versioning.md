@@ -1,16 +1,16 @@
 ---
 type: versioning_spec
-project: Mitro
+project: Mada
 version: 1.0.0
 status: canonical
 authority_level: sovereign
-last_updated: 2026-04-27
+last_updated: 2026-05-07
 ---
 
 # Senator Versioning — Specification
 
-**Document Type:** Authoritative versioning standard for all Mitro releases and agent-generated commits
-**Scope:** All source files, tagged releases, CI automation, and agent commit messages in `senator-labs/mitro`
+**Document Type:** Authoritative versioning standard for all Mada releases and agent-generated commits
+**Scope:** All source files, tagged releases, CI automation, and agent commit messages in `senator-labs/getmada`
 
 ---
 
@@ -99,7 +99,7 @@ A `!` commit is the signal to bump the Major digit. It must include a `BREAKING 
 
 ### 4.4 Scope
 
-The optional scope names the subsystem affected. Permitted scopes for Mitro:
+The optional scope names the subsystem affected. Permitted scopes for Mada:
 
 | Scope | Subsystem |
 |-------|-----------|

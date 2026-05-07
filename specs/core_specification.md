@@ -1,16 +1,16 @@
 ---
 type: core_specification
-project: Mitro
+project: Mada
 version: 1.0.0
 status: canonical
 authority_level: sovereign
-last_updated: 2026-04-25
+last_updated: 2026-05-07
 ---
 
-# Mitro: Core Specification & Architectural Blueprint
+# Mada: Core Specification & Architectural Blueprint
 
 **Document Type:** Single Source of Truth for All Development Agents
-**Project:** Mitro (Senator Labs)
+**Project:** Mada (Senator Labs)
 **Status:** Foundation Established / Active Development
 **Philosophy:** Risk-First, Local-First, Agent-Native
 
@@ -18,13 +18,13 @@ last_updated: 2026-04-25
 
 ## Executive Summary
 
-Mitro is a next-generation, local-first Personal Knowledge Management (PKM) and workspace application designed explicitly as a shared runtime environment for both human users and autonomous AI agents. Born from the synthesis of Andrej Karpathy's "LLM Knowledge Base" philosophy and the critical lessons learned from the SaaS lock-in failures of Notion, Tana, and the database-migration controversies surrounding Logseq, Mitro represents a fundamental architectural departure from legacy knowledge management paradigms.
+Mada is a next-generation, local-first Personal Knowledge Management (PKM) and workspace application designed explicitly as a shared runtime environment for both human users and autonomous AI agents. Born from the synthesis of Andrej Karpathy's "LLM Knowledge Base" philosophy and the critical lessons learned from the SaaS lock-in failures of Notion, Tana, and the database-migration controversies surrounding Logseq, Mada represents a fundamental architectural departure from legacy knowledge management paradigms.
 
 **Core Mission:** Deliver an out-of-the-box, collaborative environment where pure `.md` (Markdown) files serve as the absolute, uncorrupted source of truth—enabling instantaneous local-first performance, complete data sovereignty, and native AI agent orchestration without the vendor lock-in, privacy erosion, or formatting corruption endemic to cloud-first platforms.
 
 **Primary Target Market:** The prosumer developer demographic—solo founders, researchers, and power users who demand keyboard-first navigation, sub-50ms response times, and the freedom to run local AI models (via Ollama, LM Studio) without leaking intellectual property to external cloud providers.
 
-**Strategic Positioning:** Mitro aims to disrupt the existing PKM hegemony by combining:
+**Strategic Positioning:** Mada aims to disrupt the existing PKM hegemony by combining:
 - The local sovereignty and plain-text permanence of Obsidian
 - The outliner precision and semantic richness of Tana/Roam Research
 - The AI-native, agent-first workflows pioneered by Cursor and emerging platforms like Cabinet
@@ -61,7 +61,7 @@ Mitro is a next-generation, local-first Personal Knowledge Management (PKM) and 
 **Decision:** Pure, raw `.md` files are the database. No proprietary databases. No hidden formatting logic.
 
 **Philosophical Foundation:**
-- **Interoperability & Longevity:** If Mitro ceases to exist, all user data remains eternally readable in any text editor on any platform, across any operating system, for decades to come.
+- **Interoperability & Longevity:** If Mada ceases to exist, all user data remains eternally readable in any text editor on any platform, across any operating system, for decades to come.
 
 - **Anti-SaaS Lock-in:** Prevents the catastrophic "Notion export corruption" problem where exporting data results in bloated, malformed files with broken formatting.
 
@@ -83,7 +83,7 @@ The Markdown files live in a user-designated local directory. This directory can
 
 **Comparative Analysis:**
 
-| CRDT Library | Algorithm | History Management | Rich-Text Merging | Memory Efficiency | Verdict for Mitro |
+| CRDT Library | Algorithm | History Management | Rich-Text Merging | Memory Efficiency | Verdict for Mada |
 |--------------|-----------|-------------------|-------------------|-------------------|-------------------|
 | **Automerge v3** | Operation-based CRDT | Retains full edit history permanently | Basic text merging | Compressed columnar store | ❌ Rejected: Permanent history retention causes bloat for large vaults |
 | **Yjs** | Sequence CRDT | History garbage collected | Basic text merging | Highly optimized | ⚠️ Acceptable but limited: 53-bit unsigned integer client IDs risk collision; prone to character interleaving anomalies |
@@ -97,8 +97,8 @@ The Markdown files live in a user-designated local directory. This directory can
 3. **Tombstone-Free Architecture:** Unlike traditional CRDTs that accumulate deletion "tombstones," Loro's architecture enables rapid synchronization and snapshotting without infinite historical bloat—critical for a database consisting of 100,000+ nodes and 1.6GB of Markdown.
 
 **Agent-Native Race Condition Mitigation:**
-- When the user types in the Windsurf IDE/Mitro UI, each keystroke generates a timestamped CRDT operational delta
-- When an autonomous AI script (e.g., Claude Code Agent Team member) brutally overwrites a `.md` file via OS-level file write, Mitro's file watcher detects the change
+- When the user types in the Windsurf IDE/Mada UI, each keystroke generates a timestamped CRDT operational delta
+- When an autonomous AI script (e.g., Claude Code Agent Team member) brutally overwrites a `.md` file via OS-level file write, Mada's file watcher detects the change
 - The Rust backend calculates the diff using Tree-sitter AST, translates the brute file modification into CRDT operations, and mathematically merges with the user's concurrent keystrokes
 - **Result:** Characters are algorithmically interwoven, not overwritten—eliminating `(Sync Conflict)` files and data loss
 
@@ -111,14 +111,14 @@ The Markdown files live in a user-designated local directory. This directory can
 - **Solution:** SQLite acts as a **projection/cache layer**—a fast, queryable mirror of the Markdown truth
 
 **Critical Constraints (Risk Mitigation):**
-1. **SQLite is Ephemeral, Not Canonical:** If the SQLite database becomes corrupted (due to OS crashes, iCloud interference, or power failures), Mitro must be capable of reconstructing the entire index from the Markdown files within seconds using multi-threaded Rust parsing.
+1. **SQLite is Ephemeral, Not Canonical:** If the SQLite database becomes corrupted (due to OS crashes, iCloud interference, or power failures), Mada must be capable of reconstructing the entire index from the Markdown files within seconds using multi-threaded Rust parsing.
 
 2. **WAL Mode is Mandatory:** Write-Ahead Logging (WAL) must be enabled to allow concurrent readers and writers without triggering `database is locked` errors—essential when AI agents index files while the user navigates the UI.
 
 3. **Content Hashing to Prevent Infinite Sync Loops:**
    - When the file watcher detects a Modify event, calculate a fast non-cryptographic hash (xxHash) of the file payload
    - Only trigger expensive I/O and parsing if the hash differs from the stored SQLite value
-   - When Mitro writes to disk, set a transient exclusion flag to ignore the self-generated watcher event
+   - When Mada writes to disk, set a transient exclusion flag to ignore the self-generated watcher event
 
 4. **Integration with cr-sqlite for CRDT-aware Relational State:** Consider integrating `cr-sqlite` extension to add multi-master replication capabilities to the SQLite layer itself, enabling eventual consistency across devices
 
@@ -138,7 +138,7 @@ The Markdown files live in a user-designated local directory. This directory can
 **Mechanism:**
 1. **Incremental Parsing with Tree-sitter:** When a Markdown file is opened or modified, Tree-sitter generates an Abstract Syntax Tree (AST) where each paragraph, list item, and heading is positioned in a hierarchical structure (e.g., `Root -> Section(H2) -> List -> ListItem(index: 2)`)
 
-2. **Fuzzy Hash Generation:** When File B references a block in File A, Mitro calculates a **layered fuzzy hash** containing:
+2. **Fuzzy Hash Generation:** When File B references a block in File A, Mada calculates a **layered fuzzy hash** containing:
    - Normalized text content of the block
    - Tree-sitter AST structural context (which heading section contains this block?)
    - Lexical anchors (5-word token sequences immediately before and after the block)
@@ -148,7 +148,7 @@ The Markdown files live in a user-designated local directory. This directory can
    - The AST structural relationship (block is still under the same H2 heading) persists
    - The surrounding lexical anchors remain intact
 
-4. **Re-anchoring on Background Parse:** After Tree-sitter incrementally updates the AST, Mitro's SQLite engine performs a similarity search using token-level matching or Levenshtein distance. If a candidate block exceeds a confidence threshold (e.g., 90%), the reference automatically "snaps back" without user intervention.
+4. **Re-anchoring on Background Parse:** After Tree-sitter incrementally updates the AST, Mada's SQLite engine performs a similarity search using token-level matching or Levenshtein distance. If a candidate block exceeds a confidence threshold (e.g., 90%), the reference automatically "snaps back" without user intervention.
 
 **Performance Constraint:** This algorithm is computationally expensive at scale. Multi-threaded Rust implementation with aggressive caching is mandatory to prevent UI stuttering when validating thousands of references.
 
@@ -176,10 +176,10 @@ The Markdown files live in a user-designated local directory. This directory can
 
 **Milestone 0 Scope (Stripped-Down Prototype):**
 - Blank, unstyled Tauri window
-- Hardcoded path to local test folder (`~/Mitro_Test_Vault`)
+- Hardcoded path to local test folder (`~/Mada_Test_Vault`)
 - Simple textarea loading `index.md`
 - Real-time Rust backend updates to `index.md` as user types
-- **Ultimate Test:** Open `index.md` in external editor (VS Code/Vim) while user types in Mitro—changes from both sources must merge without data loss
+- **Ultimate Test:** Open `index.md` in external editor (VS Code/Vim) while user types in Mada—changes from both sources must merge without data loss
 
 **Explicitly Banned from Milestone 0:**
 - Cloud synchronization or authentication
@@ -240,7 +240,7 @@ The Markdown files live in a user-designated local directory. This directory can
 **Directory Topology:**
 
 ```
-/mitro/
+/getmada/
 ├── .claude/
 │   ├── hooks.json                    # Critic-in-the-Loop intercept events
 │   └── skills/                       # Reusable SOPs for agents
@@ -463,7 +463,7 @@ The Markdown files live in a user-designated local directory. This directory can
 
 ## VII. Competitive Differentiation Matrix
 
-| Feature | Mitro | Obsidian | Notion | Tana | Logseq (DB) |
+| Feature | Mada | Obsidian | Notion | Tana | Logseq (DB) |
 |---------|-------|----------|--------|------|-------------|
 | **Local-First** | ✅ Core | ✅ Yes | ❌ Cloud-only | ❌ Cloud-only | ⚠️ SQLite (opaque) |
 | **Pure Markdown** | ✅ Forever | ✅ Yes | ❌ Proprietary | ❌ Proprietary | ❌ Migrating away |
@@ -493,9 +493,9 @@ The Markdown files live in a user-designated local directory. This directory can
 
 ---
 
-## IX. Conclusion: The Mitro Mandate
+## IX. Conclusion: The Mada Mandate
 
-Mitro exists to solve the fundamental betrayal of modern knowledge work: the forced choice between cloud collaboration convenience and local data sovereignty. We reject this false dichotomy. Through rigorous application of Conflict-Free Replicated Data Types, agent-native semantic engineering, and uncompromising local-first architecture, Mitro delivers instantaneous performance, absolute data ownership, and collaborative intelligence without vendor lock-in.
+Mada exists to solve the fundamental betrayal of modern knowledge work: the forced choice between cloud collaboration convenience and local data sovereignty. We reject this false dichotomy. Through rigorous application of Conflict-Free Replicated Data Types, agent-native semantic engineering, and uncompromising local-first architecture, Mada delivers instantaneous performance, absolute data ownership, and collaborative intelligence without vendor lock-in.
 
 This specification serves as the immutable contract between human architects and autonomous coding agents. Every technical decision documented herein prioritizes:
 
@@ -506,7 +506,7 @@ This specification serves as the immutable contract between human architects and
 
 The path forward is clear. The technology stack is proven. The market demand is validated by Cursor's $1B ARR trajectory and the exodus from Logseq's database migration.
 
-Mitro will be built. This specification is the map. Now we execute.
+Mada will be built. This specification is the map. Now we execute.
 
 ---
 

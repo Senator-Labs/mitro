@@ -1,15 +1,15 @@
 ---
 type: registry_index
-project: Mitro
+project: Mada
 status: canonical
 authority_level: sovereign
-last_updated: 2026-05-02
+last_updated: 2026-05-07
 ---
 
 # Semantic Registry — Index
 
 <context>
-This directory contains the **agent-readable semantic context** for the Mitro project. All autonomous agents and human developers must read these files before making code changes. These documents define the immutable constraints, business logic, and architectural principles that govern all development work.
+This directory contains the **agent-readable semantic context** for the Mada project. All autonomous agents and human developers must read these files before making code changes. These documents define the immutable constraints, business logic, and architectural principles that govern all development work.
 </context>
 
 ---
@@ -69,8 +69,8 @@ This directory contains the **agent-readable semantic context** for the Mitro pr
 
 ### `02_context/STORAGE_POLICY.md`
 - **Purpose:** Defines Brain (knowledge) vs. Brawn (codebase) separation
-- **Brain Path:** `/mnt/chromeos/GoogleDrive/MyDrive/Senator_Vault/Mitro/`
-- **Brawn Path:** `~/mitro` (this repository)
+- **Brain Path:** `/mnt/chromeos/GoogleDrive/MyDrive/Senator_Vault/Mada/`
+- **Brawn Path:** `~/getmada` (this repository)
 - **Cross-Context Rule:** Agents may read from Brain to inform Brawn development
 
 ### `03_skills/index_obsidian.md`
@@ -226,6 +226,6 @@ These files live outside `.semantic_registry/` but are part of the semantic cont
 
 **Authority:** This index is canonical for navigating the semantic registry. All registry files use strict XML tagging for maximum agent readability. Conflicts between registry files resolve in favor of `specs/core_specification.md`.
 
-**Last Updated:** 2026-05-02  
+**Last Updated:** 2026-05-07  
 **Maintainer:** @senatordev  
 **Status:** Active — Phase 1.2 (Semantic Registry Refactor) Complete

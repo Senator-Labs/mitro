@@ -1,15 +1,15 @@
 ---
 type: product_context
-project: Mitro
+project: Mada
 status: canonical
 authority_level: sovereign
-last_updated: 2026-05-02
+last_updated: 2026-05-07
 ---
 
-# Mitro — Product Context & Business Logic
+# Mada — Product Context & Business Logic
 
 <context>
-This document defines the **business goals, user personas, and product strategy** for the Mitro engine. All feature decisions, UX choices, and roadmap priorities must align with these principles. Condensed from `specs/core_specification.md` §II.2.1, §VI. Authority: the spec supersedes this file.
+This document defines the **business goals, user personas, and product strategy** for the Mada engine. All feature decisions, UX choices, and roadmap priorities must align with these principles. Condensed from `specs/core_specification.md` §II.2.1, §VI. Authority: the spec supersedes this file.
 </context>
 
 ---
@@ -41,7 +41,7 @@ Deliver an out-of-the-box, collaborative environment where pure `.md` files serv
 
 <context type="competitive_positioning">
 
-Mitro combines:
+Mada combines:
 
 | Pillar | Reference Product |
 |--------|------------------|
@@ -77,7 +77,7 @@ Mitro combines:
 <mandatory_patterns type="m0_scope">
 
 - Blank, unstyled Tauri window
-- Hardcoded vault path: `~/Mitro_Test_Vault`
+- Hardcoded vault path: `~/Mada_Test_Vault`
 - Single `<textarea>` loading `index.md`
 - Real-time Rust backend writes as user types
 - External editor (VS Code/Vim) edits same file concurrently → changes must merge without data loss

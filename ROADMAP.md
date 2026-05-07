@@ -1,22 +1,22 @@
 ---
 type: roadmap
-project: Mitro
+project: Mada
 milestone: 0
 status: active
 authority_level: execution
-last_updated: 2026-04-27
+last_updated: 2026-05-07
 version_baseline: v0.0.0.0.1
 version_target: v0.0.0.1.0
 versioning_spec: specs/versioning.md
 ---
 
-# Mitro — Milestone 0 Roadmap: Engine Test
+# Mada — Milestone 0 Roadmap: Engine Test
 
 **Philosophy:** Risk-First. Prove the three core technical hypotheses before any UI polish, branding, or feature work.
 
 **Exit Criteria for Milestone 0:**
-1. Tauri window opens `~/Mitro_Test_Vault/index.md` and writes changes back to disk in <50ms
-2. Two concurrent processes (Mitro UI + external editor) edit the same file and converge without data loss or conflict files
+1. Tauri window opens `~/Mada_Test_Vault/index.md` and writes changes back to disk in <50ms
+2. Two concurrent processes (Mada UI + external editor) edit the same file and converge without data loss or conflict files
 3. Keystroke latency in the bare editor remains <16ms under continuous autosave
 
 ---
@@ -29,7 +29,7 @@ versioning_spec: specs/versioning.md
 
 ### 1.1 Repository Initialization
 
-- [x] `git init` in `~/mitro` and push to GitHub under `senator-labs/mitro`
+- [x] `git init` in `~/getmada` and push to GitHub under `senator-labs/getmada`
 - [x] Add `.gitignore` covering: `target/`, `node_modules/`, `*.db`, `*.db-shm`, `*.db-wal`, `.env*`, `dist/`
 - [x] Create `CODEOWNERS` assigning `@senatordev` as sole reviewer for `specs/` and `.semantic_registry/`
 - [x] Commit `specs/core_specification.md` as the inaugural tracked file — this is the immutable contract
@@ -96,9 +96,9 @@ components = ["rustfmt", "clippy"]
 
 ### 1.5 Test Vault Fixture
 
-- [ ] Create `~/Mitro_Test_Vault/` (local only, never committed)
+- [ ] Create `~/Mada_Test_Vault/` (local only, never committed)
 - [ ] Seed it with `index.md` containing 500 words of placeholder text across multiple paragraphs (enough to exercise the parser)
-- [ ] Add `~/Mitro_Test_Vault/` to global `.gitignore` or document in `README.md` that it is a local fixture
+- [ ] Add `~/Mada_Test_Vault/` to global `.gitignore` or document in `README.md` that it is a local fixture
 
 ---
 
@@ -110,11 +110,11 @@ components = ["rustfmt", "clippy"]
 
 ### 2.1 Tauri Project Scaffold
 
-- [ ] Run `cargo tauri init` inside `~/mitro` — accept defaults for WebView integration
+- [ ] Run `cargo tauri init` inside `~/getmada` — accept defaults for WebView integration
 - [ ] Confirm project structure:
 
 ```
-mitro/
+getmada/
 ├── src/            # React + TypeScript frontend
 ├── src-tauri/
 │   ├── src/
@@ -126,7 +126,7 @@ mitro/
 └── index.html
 ```
 
-- [ ] Set `tauri.conf.json` `allowlist` to the minimum required surface: `fs` (read/write to `$HOME/Mitro_Test_Vault` only), no network permissions
+- [ ] Set `tauri.conf.json` `allowlist` to the minimum required surface: `fs` (read/write to `$HOME/Mada_Test_Vault` only), no network permissions
 - [ ] Confirm `cargo tauri dev` opens a blank window with no errors in console
 
 ---
@@ -137,7 +137,7 @@ Implement the three commands needed for Milestone 0 — nothing more:
 
 **`read_file`**
 - [ ] Accept `path: String` parameter
-- [ ] Validate path is within the hardcoded vault root (`~/Mitro_Test_Vault`) — reject anything outside
+- [ ] Validate path is within the hardcoded vault root (`~/Mada_Test_Vault`) — reject anything outside
 - [ ] Return `Result<String, String>` (file content or error message)
 - [ ] Measure and log round-trip time with `std::time::Instant`; assert <50ms in debug builds
 
@@ -189,13 +189,13 @@ pub fn get_vault_path() -> String { ... }
 - [ ] No auth flows
 - [ ] No network calls
 
-**Verification:** Type in the textarea, switch to a terminal, `cat ~/Mitro_Test_Vault/index.md` — changes are persisted within 250ms of keyup.
+**Verification:** Type in the textarea, switch to a terminal, `cat ~/Mada_Test_Vault/index.md` — changes are persisted within 250ms of keyup.
 
 ---
 
 ### 2.4 Latency Profiling Harness
 
-- [ ] Add a `MITRO_PERF_LOG=1` environment variable gate that writes per-operation timing to `~/.mitro_perf.jsonl`
+- [ ] Add a `MADA_PERF_LOG=1` environment variable gate that writes per-operation timing to `~/.mada_perf.jsonl`
 - [ ] Each log entry: `{ "op": "write_file", "bytes": N, "duration_ms": N, "timestamp": ISO8601 }`
 - [ ] Create `scripts/perf_report.sh` that reads the log and prints p50/p95/p99 latencies
 - [ ] Run the harness for 60 seconds of continuous typing before declaring Phase 2 complete
@@ -206,14 +206,14 @@ pub fn get_vault_path() -> String { ... }
 
 ## Phase 3 — Local Storage Bridge
 
-**Goal:** Validate Risk B — prove concurrent edits from Mitro UI and an external editor converge mathematically via Loro CRDT, with SQLite as the fast query cache. This is the hardest risk and the core of Milestone 0.
+**Goal:** Validate Risk B — prove concurrent edits from Mada UI and an external editor converge mathematically via Loro CRDT, with SQLite as the fast query cache. This is the hardest risk and the core of Milestone 0.
 
 ---
 
 ### 3.1 File Watcher (notify crate)
 
 - [ ] Add `notify = "6"` to `Cargo.toml`
-- [ ] Spawn a dedicated watcher thread on app start watching `~/Mitro_Test_Vault` recursively
+- [ ] Spawn a dedicated watcher thread on app start watching `~/Mada_Test_Vault` recursively
 - [ ] On `EventKind::Modify` for a `.md` file:
   1. Check self-write exclusion flag — if set, consume flag and return (ignore own writes)
   2. Calculate xxHash of new file content
@@ -224,14 +224,14 @@ pub fn get_vault_path() -> String { ... }
 
 **Critical constraint:** The watcher must never trigger on its own `write_file` output. Self-write exclusion is not optional — it prevents the infinite loop described in spec §V.5.2.
 
-**Verification:** Edit `index.md` in VS Code. Within 200ms, the Mitro textarea reflects the change without any user action.
+**Verification:** Edit `index.md` in VS Code. Within 200ms, the Mada textarea reflects the change without any user action.
 
 ---
 
 ### 3.2 SQLite Index Layer (WAL Mode)
 
 - [ ] Add `rusqlite = { version = "0.31", features = ["bundled"] }` to `Cargo.toml`
-- [ ] On first launch, create `~/.local/share/mitro/index.db` (OS cache dir, never inside the vault, never synced)
+- [ ] On first launch, create `~/.local/share/mada/index.db` (OS cache dir, never inside the vault, never synced)
 - [ ] Run on connection open:
 
 ```sql
@@ -277,9 +277,9 @@ This is the validation of Risk B — the mathematical heart of Milestone 0.
 **CRDT Contract:** The final file content must be identical regardless of operation order. Validate this with the concurrent edit test below.
 
 **Verification (Risk B — Concurrent Edit Test):**
-1. Open Mitro, focus on `index.md` textarea
+1. Open Mada, focus on `index.md` textarea
 2. In a separate terminal: run `scripts/concurrent_edit_test.sh` which appends one line every 100ms for 10 seconds
-3. Simultaneously type freely in the Mitro textarea for the same 10 seconds
+3. Simultaneously type freely in the Mada textarea for the same 10 seconds
 4. Stop both
 5. Assert: `index.md` contains content from both sources — no lines from either source are missing, no `(Sync Conflict)` files exist, no `<<<<<<` merge markers
 
@@ -308,7 +308,7 @@ For Milestone 0, Tree-sitter is used only to translate a brute file overwrite in
 # Milestone 0 exit criteria validation
 set -euo pipefail
 
-VAULT="$HOME/Mitro_Test_Vault"
+VAULT="$HOME/Mada_Test_Vault"
 FILE="$VAULT/index.md"
 
 echo "=== M0 Test: File round-trip latency ==="
@@ -316,9 +316,9 @@ echo "=== M0 Test: File round-trip latency ==="
 # Assert median <50ms
 
 echo "=== M0 Test: External edit detection ==="
-# Start Mitro dev build in background
+# Start Mada dev build in background
 # Echo a line to index.md from terminal
-# Assert Mitro emits vault://file-changed within 200ms
+# Assert Mada emits vault://file-changed within 200ms
 
 echo "=== M0 Test: Concurrent edit convergence ==="
 # Run concurrent_edit_test.sh

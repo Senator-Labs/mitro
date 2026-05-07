@@ -1,15 +1,15 @@
 ---
 type: tech_stack
-project: Mitro
+project: Mada
 status: canonical
 authority_level: sovereign
-last_updated: 2026-05-02
+last_updated: 2026-05-07
 ---
 
-# Mitro Tech Stack — Agent-Readable Specification
+# Mada Tech Stack — Agent-Readable Specification
 
 <context>
-This document defines the **immutable technical foundation** of the Mitro engine. All autonomous agents and human developers must validate their work against these constraints before committing code. Deviations require explicit human approval and a `docs(spec):` commit.
+This document defines the **immutable technical foundation** of the Mada engine. All autonomous agents and human developers must validate their work against these constraints before committing code. Deviations require explicit human approval and a `docs(spec):` commit.
 </context>
 
 ---
@@ -120,12 +120,12 @@ This document defines the **immutable technical foundation** of the Mitro engine
 - ❌ **BANNED:** Full file re-parse on every keystroke
 - ❌ **BANNED:** Synchronous SQLite queries on UI thread
 - ❌ **BANNED:** Animations or transitions that degrade <16ms keystroke latency
-- **Enforcement:** Performance profiling harness (`MITRO_PERF_LOG=1`)
+- **Enforcement:** Performance profiling harness (`MADA_PERF_LOG=1`)
 
 ### Architectural Shortcuts
 - ❌ **BANNED:** Raw string replacement instead of CRDT operations
 - ❌ **BANNED:** SQLite as source of truth (must be rebuildable from Markdown)
-- ❌ **BANNED:** Hardcoded file paths (except `~/Mitro_Test_Vault` in Milestone 0)
+- ❌ **BANNED:** Hardcoded file paths (except `~/Mada_Test_Vault` in Milestone 0)
 - ❌ **BANNED:** Network calls without offline-first fallback
 - **Enforcement:** Code review + Critic-in-the-Loop automated validation
 
